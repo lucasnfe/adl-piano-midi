@@ -3,7 +3,7 @@ import json
 import spotipy
 import argparse
 
-AUTH_TOKEN="BQC7_a5fFCsolt-IwGz8TdhAQXCXGqmG-SpUpVq-IYjTtubsqvF61OSIUy_dKDOcPUupaAmeEdT0DKSjrsWBpXHEFL1GHQyEz7veZnN-YlRmSU99UJPO8YPQB_ZCHjDM8ZsPJMC36oIJ"
+AUTH_TOKEN=""
 
 def estimate_artist_genre(artist_name, GENRES_MAP):
     spotify = spotipy.Spotify(auth=AUTH_TOKEN)
