@@ -1,0 +1,50 @@
+{
+		"Rock": ["rock", "metal", "grunge", "punk", "emo", "hardcore", "surf", "indie",
+			"mathcore", "dreamo", "garage", "screamo", "merseybeat", "deathcore", "horrorcore",
+			"thrash", "doomcore", "permanent wave", "atmospheric doom", "blackgaze", "c86",
+			"chamber psych", "crossover prog", "psych gaze", "progressive", "mellow gold", "neo mellow",
+			"grave wave", "british invasion", "jam band", "hammond organ", "fingerstyle",
+			"experimental", "palm desert", "shoegaze", "slow core", "zolo", "gymcore", "mod revival", "industrial"
+		],
+		"Rap": ["rap", "hip hop", "ambeat", "miami bass", "k-hop", "bounce", "hyphy"],
+		"Jazz": ["jazz", "big band", "dixieland", "bebop", "fusion", "hard bop", "audiophile vocal", "brass ensemble", "smooth saxophone"],
+		"Classical": ["classical", "baroque", "ballet", "orchestra", "radio symphony", "opera", "historic",
+			"cello", "ballroom", "handbell", "romantic era", "vocal harmony group "
+		],
+		"Country": ["country", "bluegrass", "western", "nashville", "banjo", "cajun", "zydeco", "bakersfield sound"],
+		"Blues": ["blues", "ragtime", "honky tonk"],
+		"Soul": ["funk", "soul", "r&b", "rare groove", "doo-wop", "new jack"],
+		"Reggae": ["reggae", "ska"],
+		"Folk": ["folk", "volksmusik", "alpine yodeling", "lilith", "americana", "native american"],
+		"Children": ["children", "enfant", "lullaby", "kinder", "nursery"],
+		"Latin": ["latin", "cumbia", "norteno", "zouk", "ranchera", "rumba", "tejano", "spanish", "salsa",
+			"chunchaca", "champeta", "grupera", "banda", "merengue", "cancion", "bachata", "andean",
+			"boogaloo", "cubaton", "kompa", "villancico", "guatemala", "mariachi", "corrido", "new mexico", "mambo"
+		],
+		"Religious": ["gospel", "christian", "worship", "praise", "adoracao", "ccm", "rosary", "louvor"],
+		"Soundtracks": ["soundtrack", "theme", "cartoon", "disney", "hollywood", "scorecore", "movie", "anime", "broadway", "show", "video game"],
+		"Ambient": ["ambient", "chill", "lounge", "drone", "easy listening", "sleep", "environmental", "new age",
+			"instrumental", "focus", "background music", "asmr", "dungeon synth", "musica de fondo", "healing", "spa", "sound effects"
+		],
+		"World": ["ceilidh", "chaabi marocain", "chanson", "chant basque", "bhangra",
+			"pagode", "axe", "sertanejo", "schlager", "antideutsche", "arabesk", "australian",
+			"irish", "celtic", "balkan", "danish", "french", "german", "hamburger schule", "hawaiian",
+			"kavkaz", "kirtan", "klezmer", "flamenco", "tango", "liedermacher", "polka", "shamisen",
+			"shibuya-kei", "sevdah", "rai", "rif", "panpipe", "oi", "deutsche", "touareg", "guadeloupe",
+			"galego", "copla", "dutch", "canadian", "chutney", "iskelma", "dansband", "oktoberfest", "accordion", "choro",
+			"bossa nova", "mezmur", "scottish", "eurovision", "brega", "didgeridoo", "japanese", "mpb",
+			"mundart", "nasheed", "chinese", "swedish", "napoletana", "italogaze", "nz", "african"
+		],
+		"Pop": ["pop", "boy band", "karaoke", "motown", "dansktop", "opm", "new wave",
+			"epicore", "comedy", "comic", "a cappella", "quiet storm", "adult standards", "beach", "novelty",
+			"idol", "melancholia", "classify", "tribute", "pony", "stomp and holler", "girl group", "fake",
+			"cabaret", "otacore", "christmas", "ringtone", "urban contemporary", "piano cover", "songwriter"
+		],
+		"Electronic": ["electronic", "electro", "house", "disco", "dance", "trance", "dub", "techno", "lo-fi",
+			"big beat", "breakbeat", "bmore", "ghettotech", "aggrotech", "ebm", "balearic", "edm",
+			"afrobeat", "afro psych", "azonto", "big room", "brostep", "catstep", "basshall", "bass music",
+			"drill and bass", "drum and bass", "hands up", "hopebeat", "schranz", "power noise", "hi-nrg",
+			"complextro", "grime", "darkstep", "hardstyle", "freestyle", "full on", "cantaditas", "moog",
+			"laboratorio", "glitch", "workout", "ninja", "bassline", "makina", "turntablism"
+		]
+}
