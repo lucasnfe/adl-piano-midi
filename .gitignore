@@ -1,2 +1,4 @@
 *.pyc
 *.out
+midi/train
+midi/test

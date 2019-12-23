@@ -3,7 +3,7 @@ import json
 import argparse
 import hashlib
 
-MIDI_EXTENSIONS = [".mid", ".midi", ".MID", ".MIDI"]
+from utils import get_midi_files
 
 def adl_load_dataset(adl_path):
     adl_dataset = {}
@@ -19,10 +19,8 @@ def adl_load_dataset(adl_path):
 
         # Add full path to all midi files
         full_path_files = []
-        for filename in files:
-            _, ext = os.path.splitext(filename)
-            if ext in MIDI_EXTENSIONS:
-                full_path_files.append(os.path.join(dir, filename))
+        for filename in get_midi_files(files):
+            full_path_files.append(os.path.join(dir, filename))
 
         if artist_genre not in adl_dataset:
             adl_dataset[artist_genre] = {artist_subgenre: {artist_name: full_path_files}}
@@ -49,7 +47,7 @@ def adl_songs(adl_dataset):
                         if midi_md5 not in songs:
                             songs[midi_md5] = song_path
                         else:
-                            raise Exception('There is duplicated files in the dataset.') 
+                            raise Exception('There is duplicated files in the dataset.')
     return songs
 
 def adl_stats(adl_dataset):
