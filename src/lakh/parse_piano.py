@@ -2,11 +2,18 @@ import os
 import argparse
 import pretty_midi
 
-from utils import get_midi_files
+from utils import *
 
 MIDI_PIANO_PROGRAMS = 8
 
-def parse_piano(midi_data):
+def parse_piano(file_path):
+    try:
+        print("Parsing piano from file:", file_path)
+        midi_data = pretty_midi.PrettyMIDI(file_path)
+    except:
+        print("Cannot open midi file:", file_path)
+        return None
+
     instruments_to_remove = []
 
     for instrument in midi_data.instruments:
@@ -17,18 +24,6 @@ def parse_piano(midi_data):
         midi_data.instruments.remove(i)
 
     return midi_data
-
-def has_chord(midi):
-    for instrument in midi_data.instruments:
-        note_starts = {}
-        for n in instrument.notes:
-            if n.start not in note_starts:
-                note_starts[n.start] = n.pitch
-            else:
-                if abs(note_starts[n.start] - n.pitch) > 12:
-                    return True
-
-    return False
 
 # Parse arguments
 parser = argparse.ArgumentParser(description='download_midi.py')
@@ -41,17 +36,9 @@ for dir_name, sub_dirs, files in os.walk(opt.lakh):
 
     for midi_name in midi_files:
         file_path = os.path.join(dir_name, midi_name)
+        midi_data = parse_piano(file_path)
 
-        try:
-            print("Parsing piano from file:", file_path)
-            midi_data = pretty_midi.PrettyMIDI(file_path)
-        except:
-            print("Cannot open midi file:", file_path)
-            continue
-
-        midi_data = parse_piano(midi_data)
-
-        if len(midi_data.instruments) > 0 and has_chord(midi_data):
+        if len(midi_data.instruments) > 0 and has_two_hands(midi_data):
             new_path = dir_name[len(opt.lakh):]
 
             try:

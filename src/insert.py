@@ -2,8 +2,8 @@ import os
 import json
 import argparse
 
-from utils import get_midi_files
 from start import add_song
+from utils import *
 from load import *
 
 # Parse arguments
@@ -33,6 +33,11 @@ for dir, _ , files in os.walk(opt.new):
     midi_files = get_midi_files(files)
     for midi_name in midi_files:
         song_path = os.path.join(dir, midi_name)
+
+        if not has_two_hands(song_path):
+            print("x midi does not have two hands", midi_name)
+            continue
+
         # Compute file MD5
         with open(song_path, "rb") as midi_file:
             midi_md5 = hashlib.md5(midi_file.read()).hexdigest()

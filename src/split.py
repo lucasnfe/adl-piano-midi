@@ -3,80 +3,89 @@ import random
 import argparse
 import shutil
 
-from utils import get_midi_files
+from load import *
 
-# Parse arguments
-parser = argparse.ArgumentParser(description='download_midi.py')
-parser.add_argument('--adl', type=str, required=True, help="Path of the adl data.")
-parser.add_argument('--perc', type=float, default=0.1, help="Percentage of files for test set.")
-parser.add_argument('--out', type=str, default=".", help="Output dir.")
-opt = parser.parse_args()
+def adl_split(adl_dataset, p):
+    random.seed(42)
 
-train_dir = os.path.join(opt.out, "train")
-test_dir = os.path.join(opt.out, "test")
+    # Get songs by genre
+    songs_by_genre = adl_songs_by_genre(adl_dataset)
 
-# Remove previous splits
-try:
-    shutil.rmtree(train_dir)
-except OSError:
-    pass
+    # Compute amount of test songs
+    total_songs = sum([len(songs) for songs in songs_by_genre.values()])
+    n_test_songs = int(total_songs * p)
 
-try:
-    shutil.rmtree(test_dir)
-except OSError:
-    pass
+    # Get list of genres
+    genres_list = list(songs_by_genre.keys())
 
-n_midis = 0
-midi_dirs = {}
+    train, test = [], []
 
-for dir_name, sub_dirs, files in os.walk(opt.adl):
-    if len(files) == 0:
-        continue
+    # Add songs by genre to the test split
+    for i in range(n_test_songs):
+        genre = genres_list[i % len(genres_list)]
 
-    # Parse genre from directory name
-    genre = dir_name[len(opt.adl):].split("/")[-3]
+        # Copy a random file from the adl dataset and add it to the list of test midis
+        if len(songs_by_genre[genre]) > 0:
+            r = random.randint(0, len(songs_by_genre[genre]) - 1)
+            r_file = songs_by_genre[genre].pop(r)
+            test.append(r_file)
 
-    if genre not in midi_dirs:
-        midi_dirs[genre] = []
+    # Add the remaining songs to the train split
+    for songs in songs_by_genre.values():
+        train += songs
 
-    for file_name in get_midi_files(files):
-        midi_dirs[genre].append(os.path.join(dir_name, file_name))
-        n_midis += 1
+    return train, test
 
-# Create train and test splits
-try:
-    os.mkdir(train_dir)
-except OSError:
-    print("Could not create train directory")
+if __name__ == "__main__":
 
-try:
-    os.mkdir(test_dir)
-except OSError:
-    print("Could not create test directory")
+    # Parse arguments
+    parser = argparse.ArgumentParser(description='download_midi.py')
+    parser.add_argument('--adl', type=str, required=True, help="Path of the adl data.")
+    parser.add_argument('--out', type=str, default=".", help="Output dir.")
+    parser.add_argument('--p', type=float, default=0.1, help="Percentage of files for test set.")
+    opt = parser.parse_args()
 
-random.seed(42)
+    train_dir = os.path.join(opt.out, "train")
+    test_dir = os.path.join(opt.out, "test")
 
-c_dir = 0
-dirs_list = list(midi_dirs.keys())
+    # Remove previous splits
+    try:
+        shutil.rmtree(train_dir)
+    except OSError:
+        pass
 
-print(dirs_list)
+    try:
+        shutil.rmtree(test_dir)
+    except OSError:
+        pass
 
-while len(os.listdir(test_dir)) < int(opt.perc * n_midis):
-    genre = dirs_list[c_dir]
+    adl_dataset = adl_load_dataset(opt.adl)
+    adl_dataset_stats = adl_stats(adl_dataset)
 
-    # Copy a random file from the adl dataset and add it to the list of test midis
-    if len(midi_dirs[genre]) > 0:
-        r = random.randint(0, len(midi_dirs[genre]) - 1)
-        r_file = midi_dirs[genre].pop(r)
+    train, test = adl_split(adl_dataset, opt.p)
 
-        shutil.copyfile(r_file, os.path.join(test_dir, os.path.basename(r_file)))
+    # Sum of splits should have same amount of songs in the dataset
+    assert len(train) + len(test) == adl_dataset_stats["Songs"]
 
-    c_dir = (c_dir + 1) % len(dirs_list)
+    # Create train and test splits
+    try:
+        os.makedirs(train_dir)
+    except OSError:
+        print("Could not create train directory")
 
-for files in midi_dirs.values():
-    for midi in files:
-        shutil.copyfile(midi, os.path.join(train_dir, os.path.basename(midi)))
+    for song in train:
+        song_name = song.split("/")[-1]
+        shutil.copyfile(song, os.path.join(train_dir, song_name))
 
-print("Total files:", n_midis)
-print("Train", len(os.listdir(train_dir)))
-print("Test", len(os.listdir(test_dir)))
+    try:
+        os.makedirs(test_dir)
+    except OSError:
+        print("Could not create test directory")
+
+    for song in test:
+        song_name = song.split("/")[-1]
+        shutil.copyfile(song, os.path.join(test_dir, song_name))
+
+    print("Total files:", adl_dataset_stats["Songs"])
+    print("Train", len(train))
+    print("Test", len(test))
