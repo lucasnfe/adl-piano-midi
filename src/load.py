@@ -85,6 +85,9 @@ if __name__ == "__main__":
     opt = parser.parse_args()
 
     adl_dataset = adl_load_dataset(opt.adl)
-    adl_dataset_stats = adl_stats(adl_dataset)
 
+    adl_dataset_stats = adl_stats(adl_dataset)
     print(adl_dataset_stats)
+
+    adl_dataset_songs_by_genre = adl_songs_by_genre(adl_dataset)
+    print(adl_dataset_songs_by_genre)
