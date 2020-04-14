@@ -50,11 +50,11 @@ def adl_songs(adl_dataset):
                             raise Exception('There is duplicated files in the dataset.')
     return songs
 
-def adl_songs_by_genre(adl_dataset):
+def adl_songs_by_genre(adl_dataset, path_part=-3):
     songs_by_genre = {}
 
     for song_md5, song_path in adl_songs(adl_dataset).items():
-        genre = song_path.split("/")[-3]
+        genre = song_path.split("/")[path_part]
 
         if genre not in songs_by_genre:
             songs_by_genre[genre] = []
@@ -89,6 +89,6 @@ if __name__ == "__main__":
     adl_dataset_stats = adl_stats(adl_dataset)
     print(adl_dataset_stats)
 
-    adl_dataset_songs_by_genre = adl_songs_by_genre(adl_dataset)
+    adl_dataset_songs_by_genre = adl_songs_by_genre(adl_dataset, path_part=-2)
     for genre, songs in adl_dataset_songs_by_genre.items():
         print(genre, ":", len(songs))
