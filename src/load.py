@@ -90,4 +90,5 @@ if __name__ == "__main__":
     print(adl_dataset_stats)
 
     adl_dataset_songs_by_genre = adl_songs_by_genre(adl_dataset)
-    print(adl_dataset_songs_by_genre)
+    for genre, songs in adl_dataset_songs_by_genre.items():
+        print(genre, ":", len(songs))
